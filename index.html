@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="view-port" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manufacturing Consent|EB Garamond|Cormorant">
+        <title>News Feed</title>
+    </head>
+
+    <body>
+        <header>
+            <div class="web-title">
+                <h1>News Feed</h1>
+            </div>
+
+            <div class="lines">
+                <hr>
+                <hr>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li data-category="General" class="active">General</li>
+                    <li data-category="Business">Business</li>
+                    <li data-category="Technology">Technology</li>
+                    <li data-category="Entertainment">Entertainment</li>
+                    <li data-category="Sports">Sports</li>
+                </ul>
+                <form class="search">
+                    <input class="search-input" placeholder="search...">
+                    <button class="search-btn">SEARCH</button>
+                </form>
+            </nav>
+        </header>
+
+        <main>
+            <div class="theme">
+                <h2 id="category-display">General News</h2>
+                <h2 id="refresh">NEWEST</h2>
+            </div>
+
+            
+            <div id="feed-list">
+                <!--在此渲染消息列表-->
+            </div>
+
+            <div class="page-number">
+                <p class="page-btns">
+                    <!--在此渲染页码按钮-->
+                </p>
+                <p class="next-page-btn">Next >></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>POWER BY : <span><a href="https://newsapi.org/docs/endpoints/everything">News API</a></span></p>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+</html>
