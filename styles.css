@@ -17,6 +17,21 @@ a{
     --color-white:white;
 }
 
+/*让footer始终位于页面底部：用flex布局撑开中间区域*/
+html,body{
+    height:100%;
+}
+
+body{
+    
+    display:flex;
+    flex-direction: column;
+}
+
+main{
+    flex:1; /*占满剩余空间，把 footer 顶到底部*/
+}
+
 /*整个页首*/
 header{
     background-color: var(--color-black);
@@ -24,8 +39,8 @@ header{
 }
 
 .web-title{
-    height:250px;
-    font-size: 80px;
+    height:180px;
+    font-size: 60px;
     font-family: Manufacturing Consent;
     font-weight: 100;
     letter-spacing: 3px;
@@ -47,10 +62,10 @@ header{
 
 /*导航栏*/
 nav{
-    height: 50px;
-    padding:30px 35px 50px;
+    height: 20px;
+    padding:30px 35px 35px;
 
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 600;
     font-family: EB Garamond;
 
@@ -170,8 +185,8 @@ main{
 }
 
 .feed-item img{
-    width:320px;
-    height:200px;
+    width:350px;
+    height:220px;
   
     object-fit: cover;
     margin-right: 30px;
@@ -182,7 +197,7 @@ main{
 }
 
 .item-title{
-    font-size:38px;
+    font-size:35px;
     font-family: Cormorant;
 }
 .item-time{
@@ -193,7 +208,7 @@ main{
 }
 
 .item-brief{
-    font-size: 25px;
+    font-size: 22px;
    font-family: EB Garamond;
 }
 
@@ -226,7 +241,7 @@ main{
 
 /*页脚*/
 footer{
-    height:150px;
+    min-height:150px;
     background-color:var(--color-black);
     color:var(--color-white);
 

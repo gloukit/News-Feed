@@ -4,6 +4,7 @@ const refreshBtn = document.getElementById("refresh");
 
 const feedList=document.getElementById("feed-list");
 
+const pageNumber = document.querySelector(".page-number");
 const nextPageBtn = document.querySelector(".next-page-btn");
 const pageBtnsContainer = document.querySelector(".page-btns");
 
@@ -15,7 +16,7 @@ const categoryBtns = document.querySelectorAll("[data-category]");
 let lastCategoryBtn = categoryBtns[0];
 
 let articlesArr=[];     //记录API返回的所有数据
-const perPage = 5;      //设定每页显示的消息条数(配合页码渲染)
+const perPage = 10;      //设定每页显示的消息条数(配合页码渲染)
 let totalPages;         //记录不同API URL下的总页数（配合页码渲染）
 let pageArr=[];         //记录当前应当显示的页码数字(配合页码渲染)
 let currentPage=1;      //记录更新当前所在页码(配合分页功能、页码渲染)
@@ -25,9 +26,8 @@ let currentCategory;
 //<---------------------------------------------------------初始化加载网页------------------------------------------------------------>
 //<---构建API URL--->
 function buildURL({searchItem='',category='general',page=1,max=100}={}){
-    const API_KEY = "8871327b1c3a49ccbb2a35329ec326ff"; 
-    const url=new URL(`https://newsapi.org/v2/${searchItem? 'everything':'top-headlines'}`);
-    
+    const url=new URL(`https://newsfeed-proxy-vercel.vercel.app/api/news/`);
+    console.log(url)
     if(searchItem) {
         url.searchParams.set('q',searchItem);
     }else{
@@ -35,7 +35,6 @@ function buildURL({searchItem='',category='general',page=1,max=100}={}){
 
     url.searchParams.set('page',page);
     url.searchParams.set('pageSize',max);
-    url.searchParams.set('apiKey',API_KEY);
 
     return url.toString();    
 }
@@ -56,21 +55,24 @@ async function renderWeb(url){
         console.log(articlesArr);
 
         //判断返回的数据是否为空
-        if(!articlesArr.length){   
-            feedList.innerHTML = `<p style="padding: 2em; text-align:center; font-size=3em;">Here is nothing...</p>`;
-            nextPageBtn.style.display = "none";
+        if(articlesArr.length===0){  
+            feedList.innerHTML = `<p style="padding: 4em; text-align:center; font-size:1.5em;color:pink">No results found...</p>`;
+            pageNumber.style.opacity = 0;
+            pageNumber.style.pointerEvents = "none"; 
             return;
             }
 
         currentPage = 1;
+        pageNumber.style.opacity = 1;
+        pageNumber.style.pointerEvents = "auto";
+
         totalPages=Math.ceil(articlesArr.length/perPage);   //注意！这一步必须写在 renderWeb() 里面，因为 articlesArr 是异步请求之后才拿到的，不能在最外层提前计算。否则 totalPages 会是 NaN 或 0 
         renderNewsByPage(currentPage);           //分页渲染消息列表
         renderPageBtns(currentPage,totalPages);  //渲染页码按钮           
-
     }catch(err){
         console.error("出错了：",err);
         feedList.innerHTML = `<p style="padding: 2em; text-align:center; font-size=3em; color: red;">Something is wrong. Try it later...</p>`;
-        nextPageBtn.style.display = "none";
+        pageNumber.style.visibility= "hidden";
     }
 }
 
@@ -117,7 +119,7 @@ function renderNewsByPage(currentPage){
         );
 
         return `<div class="feed-item">
-                    <a href="${article.url}" target="_blank"><img src="${article.urlToImage||'assets/keisinCG.jpg'}" class="item-img"></a>
+                    <a href="${article.url}" target="_blank"><img src="${article.urlToImage||'assets/keisinCG.jpg'}" class="item-img" ></a>
                     <div class="feed-item-detail">
                         <h3 class="item-title"><a href="${article.url}" target="_blank">${article.title}</a></h3>
                         <p class="item-time"><em>${date}</em></p>
