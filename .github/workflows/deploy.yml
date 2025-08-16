@@ -3,7 +3,7 @@ name: Deploy Newsfeed to GitHub Pages
 on:
   push:
     branches:
-      - main  # 监控 main 分支 push
+      - main  
 
 jobs:
   deploy:
@@ -17,4 +17,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # 表示 直接把项目根目录所有文件部署 # 你构建后的静态文件目录，如果是 React 默认是 build，Vue 默认是 dist
+          publish_dir: ./
